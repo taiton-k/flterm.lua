@@ -6,12 +6,16 @@ local flterm = {};
 local buf_handle = -1;
 local win_handle = -1;
 
+
+local win_width = function () return math.floor(o.columns*(math.sqrt(2)/2)) end;
+local win_height = function () return math.floor(o.lines*(math.sqrt(2)/2)) end;
+
 local win_opts = {
         relative = 'editor';
-        width = function () return math.floor(o.columns*(math.sqrt(2)/2)) end;
-        height = function () return math.floor(o.lines*(math.sqrt(2)/2)) end;
-        col = function () return math.floor((o.columns-o.columns*(math.sqrt(2)/2))/2) end;
-        row = function () return math.floor((o.lines-o.lines*(math.sqrt(2)/2))/2) end;
+        width = win_width;
+        height = win_height;
+        col = function () return math.floor((o.columns-win_width()/2)) end;
+        row = function () return math.floor((o.lines-win_height()/2)) end;
         anchor = 'NW';
         style = 'minimal';
 };
