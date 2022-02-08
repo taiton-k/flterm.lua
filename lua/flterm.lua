@@ -8,10 +8,10 @@ local win_handle = -1;
 
 local win_opts = {
         relative = 'editor';
-        width = function () return math.floor(o.columns*0.70710678) end;
-        height = function () return math.floor(o.lines*0.70710678) end;
-        col = function () return math.floor((o.columns-o.columns*0.70710678)/2) end;
-        row = function () return math.floor((o.lines-o.lines*0.70710678)/2) end;
+        width = function () return math.floor(o.columns*(math.sqrt(2)/2)) end;
+        height = function () return math.floor(o.lines*(math.sqrt(2)/2)) end;
+        col = function () return math.floor((o.columns-o.columns*(math.sqrt(2)/2))/2) end;
+        row = function () return math.floor((o.lines-o.lines*(math.sqrt(2)/2))/2) end;
         anchor = 'NW';
         style = 'minimal';
 };
@@ -149,11 +149,13 @@ flterm.setup = function (opts)
                 end
         end
 
-       api.nvim_add_user_command('FlTermOpen','call v:lua.require("flterm")["open_term<bang>"]()',{bang = true});
-       api.nvim_add_user_command('FlTermClose','call v:lua.require("flterm")["close_term<bang>"]()',{bang = true});
-       api.nvim_add_user_command('FlTermToggle','call v:lua.require("flterm")["toggle_term<bang>"]()',{bang = true});
-       api.nvim_add_user_command('FlTermRun','call v:lua.require("flterm").run_cmd("<args>")',{nargs = '+'});
-       api.nvim_add_user_command('FlTermReset','call v:lua.require("flterm").reset()',{});
+       cmd([[
+                command! -bang FlTermOpen call v:lua.require("flterm")["open_term<bang>"]()
+                command! -bang FlTermClose call v:lua.require("flterm")["close_term<bang>"]()
+                command! -bang FlTermToggle call v:lua.require("flterm")["toggle_term<bang>"]()
+                command! -bang -nargs=+ FlTermRun call v:lua.require("flterm").run_cmd("<args>")
+                command! FlTermReset call v:lua.require("flterm").reset()
+        ]])
 end
 
 return flterm;
