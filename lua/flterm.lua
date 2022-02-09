@@ -135,17 +135,6 @@ end
 
 
 
-
-flterm.reset = function ()
-        if api.nvim_win_is_valid(win_handle) then
-                flterm.close_term();
-        end
-
-        api.nvim_buf_delete(buf_handle);
-end
-
-
-
 flterm.setup = function (opts)
         if opts then
                 for i,v in pairs(opts) do
