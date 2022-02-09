@@ -1,6 +1,6 @@
 # flterm.lua
 
-A simple Lua plugin to display terminal in a floating window.
+A simple Lua plugin to display terminal in the floating window.
 
 ## Usage
 
@@ -60,6 +60,9 @@ vim.api.nvim_set_keymap('t','<C-t>','<Cmd>FlTermToggle<CR>');
 
 ![flterm_default](https://user-images.githubusercontent.com/84013946/153116445-11aad054-56aa-450d-9d65-4ef79b38fdc9.png)
 
+---
+
+
 This way, you can add a border.
 
 ~~~lua
@@ -75,6 +78,11 @@ vim.api.nvim_set_keymap('t','<C-t>','<Cmd>FlTermToggle<CR>');
 ~~~
 
 ![flterm_borderd](https://user-images.githubusercontent.com/84013946/153116434-5fee43cf-9342-4c96-afc5-bdccb38ab241.png)
+
+---
+
+
+This way, you can customize winhighlight.
 
 ~~~lua
 
