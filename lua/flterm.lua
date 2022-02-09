@@ -14,8 +14,8 @@ local win_opts = {
         relative = 'editor';
         width = win_width;
         height = win_height;
-        col = function () return math.floor((o.columns-win_width()/2)) end;
-        row = function () return math.floor((o.lines-win_height()/2)) end;
+        col = function () return math.floor((o.columns-win_width())/2) end;
+        row = function () return math.floor((o.lines-win_height())/2) end;
         anchor = 'NW';
         style = 'minimal';
 };
