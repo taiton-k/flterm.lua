@@ -4,9 +4,8 @@ A simple Lua plugin to display terminal in the floating window.
 
 ## Usage
 
+quic start
 ~~~vim
-" this is vim-script
-
 " quic start flterm
 lua require('flterm').setup();
 
@@ -32,12 +31,11 @@ tnormap <C-t> <Cmd>FlTermToggle<CR>
 You can configure layout of flterm by passing the following table to the setup function.
 
 This table can have variables and functions, respectively.
-Finally, it is passed to the nvim_open_win function.
+Finally, it is passed to the `nvim_open_win` function.
 
 The screenshot shows the sl command being executed.
 
 ~~~lua
---this is lua
 -- this is the default configuration
 
 local width = function () return math.floor(vim.o.columns*(math.sqrt(2)/2)) end;
