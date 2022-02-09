@@ -33,6 +33,8 @@ This table can have variables and functions, respectively.
 
 Finally, it is passed to the nvim_open_win function.
 
+The screenshot shows the sl command being executed.
+
 ~~~lua
 
 -- this is default configuration
@@ -52,3 +54,33 @@ local opts = {
 require('flterm').setup(opts);
 
 ~~~
+
+![flterm_default](https://user-images.githubusercontent.com/84013946/153116445-11aad054-56aa-450d-9d65-4ef79b38fdc9.png)
+
+This way, you can add a border.
+
+~~~lua
+
+local opts = {
+        border = 'rounded';
+};
+
+require('flterm').setup(opts);
+
+~~~
+
+![flterm_borderd](https://user-images.githubusercontent.com/84013946/153116434-5fee43cf-9342-4c96-afc5-bdccb38ab241.png)
+
+~~~lua
+
+local opts = {
+        border = 'rounded';
+};
+
+require('flterm').setup(opts);
+
+vim.api.nvim_set_keymap('n','<C-t>','<Cmd>FlTermToggle<CR><Cmd>call nvim_win_set_option(0,"winhilight","Normal:Normal,FloatBorder:VertSplit")<CR>');
+vim.api.nvim_set_keymap('t','<C-t>','<Cmd>FlTermToggle<CR>');
+~~~
+
+![flterm_conf](https://user-images.githubusercontent.com/84013946/153116451-a75783c6-717a-4a66-b25b-21dfbf74fea0.png)
