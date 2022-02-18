@@ -90,7 +90,7 @@ local opts = {
 
 require('flterm').setup(opts);
 
-vim.api.nvim_set_keymap('n','<C-t>','<Cmd>FlTermToggle<CR><Cmd>call nvim_win_set_option(0,"winhilight","Normal:Normal,FloatBorder:VertSplit")<CR>');
+vim.api.nvim_set_keymap('n','<C-t>','<Cmd>FlTermToggle<CR><Cmd>setlocal winhighlight=Normal:Normal,FloatBorder:VertSplit<CR>');
 vim.api.nvim_set_keymap('t','<C-t>','<Cmd>FlTermToggle<CR>');
 ~~~
 
