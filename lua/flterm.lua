@@ -34,15 +34,22 @@ local function gen_win_opts ()
         return opts;
 end
 
+local function bufIsValid ()
+        return api.nvim_buf_is_valid(buf_handle);
+end
 
-flterm.open_term = function ()
-        if not api.nvim_buf_is_valid(buf_handle) then
-                buf_handle = api.nvim_create_buf(true,true);
-                if buf_handle == 0 then
-                        api.nvim_err_writeln('[flTerm]Faild to create buffer.');
-                end
+local function createBuffer ()
+        buf_handle = api.nvim_create_buf(true,true);
+        if buf_handle == 0 then
+                api.nvim_err_writeln('[flTerm]Faild to create buffer.');
         end
+end
 
+local function winIsValid()
+        return api.nvim_win_is_valid(win_handle);
+end
+
+local function createWindow ()
         if api.nvim_win_is_valid(win_handle) then
                 api.nvim_err_writeln('[flterm]Failed to create window.Window is already opend.');
         else
@@ -51,30 +58,30 @@ flterm.open_term = function ()
                         api.nvim_err_writeln('[flTerm]Faild to create window.')
                 end
         end
+end
 
+local function openTermnal ()
         if o.buftype ~= 'terminal' then
                 cmd('terminal');
         end
 end
 
+flterm.open_term = function ()
+        if not bufIsValid() then
+                createBuffer();
+        end
+
+        createWindow();
+
+        openTermnal();
+end
+
 flterm['open_term!'] = function ()
-        buf_handle = api.nvim_create_buf(true,true);
-        if buf_handle == 0 then
-                api.nvim_err_writeln('[flTerm]Faild to create buffer.');
-        end
+        createBuffer();
 
-        if api.nvim_win_is_valid(win_handle) then
-                api.nvim_err_writeln('[flterm]Failed to create window.Window is already opend.');
-        else
-                win_handle = api.nvim_open_win(buf_handle,true,gen_win_opts());
-                if win_handle == 0 then
-                        api.nvim_err_writeln('[flTerm]Faild to create window.')
-                end
-        end
+        createWindow();
 
-        if o.buftype ~= 'terminal' then
-                cmd('terminal');
-        end
+        openTermnal();
 end
 
 
@@ -82,7 +89,7 @@ end
 
 
 flterm.close_term = function ()
-        if api.nvim_win_is_valid(win_handle) then
+        if winIsValid() then
                 api.nvim_win_close(win_handle,false);
         else
                 api.nvim_err_writeln('[flterm]Failed to close window.Window is already closed.');
@@ -90,7 +97,7 @@ flterm.close_term = function ()
 end
 
 flterm['close_term!'] = function ()
-        if api.nvim_win_is_valid(win_handle) then
+        if winIsValid() then
                 api.nvim_win_close(win_handle,false);
                 api.nvim_buf_delete(buf_handle);
         else
@@ -100,7 +107,7 @@ end
 
 
 flterm.toggle_term = function ()
-        if api.nvim_win_is_valid(win_handle) then
+        if winIsValid() then
                 flterm.close_term();
         else
                 flterm.open_term();
@@ -108,7 +115,7 @@ flterm.toggle_term = function ()
 end
 
 flterm['toggle_term!'] = function ()
-        if api.nvim_win_is_valid(win_handle) then
+        if winIsValid() then
                 flterm['close_term!']();
         else
                 flterm['open_term!']();
@@ -118,17 +125,11 @@ end
 
 
 flterm.run_cmd = function (command)
-        if not api.nvim_buf_is_valid(buf_handle) then
-                buf_handle = api.nvim_create_buf(false,true);
-                if buf_handle == 0 then
-                        api.nvim_err_writeln('[flTerm]Faild to create buffer.');
-                end
+        if not bufIsValid() then
+                createBuffer();
         end
 
-        win_handle = api.nvim_open_win(buf_handle,true,gen_win_opts());
-        if win_handle == 0 then
-                api.nvim_err_writeln('[flTerm]Faild to create window.')
-        end
+        createWindow();
 
         cmd('edit term://' .. command);
 end
